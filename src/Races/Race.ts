@@ -3,8 +3,7 @@ export default abstract class Race {
   private _dexterity: number;       
   constructor(name: string, dexterity: number) {
     this._name = name;
-    this._dexterity = dexterity; 
-    Race.createdRacesInstances();   
+    this._dexterity = dexterity;      
   }
 
   get name(): string {
