@@ -25,24 +25,49 @@ class Character implements Fighter {
     this._defense = randomNumber;
     this._energy = { type_: this._archetype.energyType, amount: randomNumber };
   }
-  lifePoints: number;
-  strength: number;
-  defense: number;
-  energy?: Energy | undefined;
-  attack(enemy: Fighter): void {
-    throw new Error('Method not implemented.');
-  }
   special?(enemy: Fighter): void {
     throw new Error('Method not implemented.');
   }
   levelUp(): void {
     throw new Error('Method not implemented.');
   }
-  receiveDamage(attackPoints: number): number {
-    throw new Error('Method not implemented.');
-  }
   
   get race(): Race {
     return this._race;
+  }
+
+  get archetype(): Archetype {
+    return this._archetype;
+  }
+
+  get lifePoints(): number {
+    return this._lifePoints;
+  }
+
+  get strength(): number {
+    return this._strength;
+  }
+
+  get defense(): number {
+    return this._defense;
+  }
+
+  get energy(): Energy {
+    return this._energy;
+  }
+
+  receiveDamage(attackPoints: number): number {
+    const damage = attackPoints - this._defense;
+    if (damage > 0) {
+      this._lifePoints -= damage;
+      if (this.lifePoints <= 0) {
+        this._lifePoints = -1;        
+      }
+    }
+    return this._lifePoints;
+  }
+
+  attack(enemy: Fighter): void {
+    
   }
 }
