@@ -2,8 +2,9 @@ import Archetype, { Mage } from './Archetypes';
 import Energy from './Energy';
 import Fighter from './Fighter';
 import Race, { Elf } from './Races';
+import getRandomInt from './utils';
 
-class Character implements Fighter {
+export default class Character implements Fighter {
   private _race: Race;
   private _archetype: Archetype;
   private _maxLifePoints: number;
@@ -13,24 +14,20 @@ class Character implements Fighter {
   private _dexterity: number;
   private _energy: Energy;
   private _name: string;
-  constructor(name: string) {    
-    const randomNumber = Math.floor(Math.random() * (11 - 1) + 1);
+  constructor(name: string) {   
     this._name = name;    
-    this._dexterity = randomNumber;    
+    this._dexterity = getRandomInt(1, 10); //    
     this._race = new Elf(name, this._dexterity);
     this._archetype = new Mage(name);
     this._maxLifePoints = this.race.maxLifePoints / 2;
     this._lifePoints = this._maxLifePoints;
-    this._strength = randomNumber;
-    this._defense = randomNumber;
-    this._energy = { type_: this._archetype.energyType, amount: randomNumber };
-  }
-  special?(enemy: Fighter): void {
-    throw new Error('Method not implemented.');
-  }
-  levelUp(): void {
-    throw new Error('Method not implemented.');
-  }
+    this._strength = getRandomInt(1, 10);
+    this._defense = getRandomInt(1, 10);
+    this._energy = { //
+      type_: 'mana',
+      amount: getRandomInt(1, 10),
+    };
+  }  
   
   get race(): Race {
     return this._race;
@@ -67,7 +64,23 @@ class Character implements Fighter {
     return this._lifePoints;
   }
 
-  attack(enemy: Fighter): void {
-    
+  attack(enemy: Fighter): void { //
+    enemy.lifePoints -= enemy.lifePoints - this.strength;    
+  }
+
+  levelUp(): void { // 
+    this._maxLifePoints += getRandomInt(1, 10);
+    this._strength += getRandomInt(1, 10);
+    this._dexterity += getRandomInt(1, 10);
+    this._defense += getRandomInt(1, 10);
+    this.energy.amount = 10;
+    if (this._maxLifePoints > this._race.maxLifePoints) {
+      this._maxLifePoints = this._race.maxLifePoints;
+      this._lifePoints = this._maxLifePoints;
+    }    
+  }
+
+  special(enemy: Fighter): void {
+    enemy.lifePoints /= enemy.lifePoints / 2;
   }
 }
