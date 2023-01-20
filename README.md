@@ -1,6 +1,6 @@
 # Trybers And Dragons 
 
-27º projeto na Trybe. Prática dos princípios POO e SOLID com TypeScript em uma estrutura de jogo de RPG.
+26º projeto na Trybe. Prática dos princípios POO e SOLID com TypeScript em uma estrutura de jogo de RPG.
 
 ## Tecnologias empregadas:
 
